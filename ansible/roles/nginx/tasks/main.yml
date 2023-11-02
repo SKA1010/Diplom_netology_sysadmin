@@ -7,7 +7,7 @@
 - name: change index.html
   template:
     src: index.j2
-    dest: /var/www/html/index.nginx-debian.html
+    dest: /var/www/html/index.html
 
 - name: change style
   template:
