@@ -71,4 +71,37 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 
 ![yandex cloud balancer](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/e1475f3b-dc2d-449a-9f6c-373419ee9071)
 
+Для каждой машины были написаны Ansible роли. Так как прямого доступа по SSH к машинам у нас нет, сперва устанавливаем Ansible и копируем плейбуки на Бастион хост при помощи заранее написанного плейбука.  
+После копирования запускаем наш основной плейбук. Когда все службы развернутся, можем проверить что все необходимые ресурсы доступны.
+Проверим работу балансировщика и серверов Nginx:
+
+![image](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/d7698a15-3a98-4286-8294-d589c665be5a)
+
+Проверяем работу сайта:
+
+![image](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/d43bd23a-8d80-4720-88fb-23e14a6b0798)
+
+Подключимся к kibana и посмотрим, поступают ли туда наши логи, предварительно добавив items:
+
+![Kibana-1](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/aaa7b3fd-db5b-4fb9-b2e4-88a07d650304)
+
+Видим, что логи с обоих серверов идут:
+![Kibana-2](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/02485e8b-cae2-472e-b1c9-d07cbc908a10)
+
+Переходим к мониторингу. Создаём свой шаблон и добавляем item
+
+![zabbix-3](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/774ea26e-f8c0-4018-aa47-28816f95537f)
+
+Добавляем узлы:
+
+![zabbix-2](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/e92e830f-1b1c-4ab7-b4db-4dbecde01fb1)
+
+Настраиваем по своему усмотрению дашборды:
+
+![zabbix-1](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/5405ab75-71a8-4398-920e-5d9bb69a6620)
+
+
+
+
+
 
