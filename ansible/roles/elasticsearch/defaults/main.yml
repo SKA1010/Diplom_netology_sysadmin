@@ -1,0 +1,7 @@
+---
+# defaults file for elasticsearch
+elastic_deb: elasticsearch-7.17.9-amd64.deb
+elastic_cache: elasticsearch-7.17.9-amd64.deb.sha512
+elastic_src: ELK/
+dest_source: /home/ska/
+

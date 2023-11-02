@@ -1,0 +1,110 @@
+---
+    - name: create directory
+      file:
+        path: "{{user_dir_zabbix}}"
+        state: directory
+        mode: "u=rwx,g=rwx,o=rwx"
+
+    - name: download zabbix server
+      get_url:
+        url: "{{url_zabbix_server}}"
+        dest: "{{user_dir_zabbix}}"
+
+    - name: install postgresql
+      apt:
+        name: postgresql
+        state: latest
+
+    - name: install zabbix
+      apt:
+        deb: "{{user_dir_zabbix}}{{zabbix_server_deb}}"
+
+    - name: update cache
+      apt:
+        update_cache: yes
+
+    - name: install zabbix-server-pgsql
+      apt:
+        name: zabbix-server-pgsql
+        state: latest
+
+    - name:  install zabbix-frontend-php
+      apt:
+        name: zabbix-frontend-php
+        state: latest
+
+    - name:  install php7.4-pgsql
+      apt:
+        name: php7.4-pgsql
+
+    - name:  install zabbix-nginx-conf
+      apt:
+        name: zabbix-nginx-conf
+
+    - name:  install zabbix-sql-scripts
+      apt:
+        name: zabbix-sql-scripts
+
+    - name: install zabbix-agent
+      apt:
+        name: zabbix-agent
+
+    -  name: restart service db
+       systemd:
+         name: postgresql
+         state: restarted
+
+# pre-install ansible-galaxy collection install community.postgresql
+    # - name: create user zabbix
+    #   become_user: postgres
+    #   ansible.builtin.postgresql_user:
+    #     name: "{{ zabbix_db_admin_user }}"
+    #     password: "{{ zabbix_db_admin_password }}"
+
+    # - name: create db 
+    #   become_user: postgres
+    #   ansible.builtin.postgresql_db:
+    #     name: "{{zabbix_db_name}}"
+    #     owner: "{{zabbix_db_admin_user}}"
+
+    - name: create db
+      shell: |
+        su - postgres -c 'psql --command "CREATE USER {{zabbix_db_admin_user}} WITH PASSWORD '\'{{zabbix_db_admin_password}}\'';"'
+        su - postgres -c 'psql --command "CREATE DATABASE {{zabbix_db_name}} OWNER {{zabbix_db_admin_user}};"'
+        zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | sudo -u {{zabbix_db_admin_user}} psql {{zabbix_db_name}}
+
+    - name: config zabbix_server
+      template:
+        src: zabbix_server.j2
+        dest: /etc/zabbix/zabbix_server.conf
+
+    - name: config nginx
+      template:
+        src: nginx.j2
+        dest: /etc/nginx/sites-enabled/default
+
+    - name: enable and start zabbix services
+      systemd:
+        name: zabbix-server
+        enabled: yes
+      systemd:
+        name: zabbix-agent
+        enabled: yes
+      systemd:
+        name: nginx
+        enabled: yes
+      systemd:
+        name: php7.4-fpm
+        enabled: yes
+      systemd:
+        name: nginx
+        state: started
+      systemd:
+        name: php7.4-fpm
+        state: started
+      systemd:
+        name: zabbix-server
+        state: started
+      systemd:
+        name: zabbix-agent
+        state: started

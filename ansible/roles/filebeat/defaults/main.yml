@@ -1,0 +1,7 @@
+---
+# defaults file for filebeat
+filebeat_deb: filebeat-7.17.9-amd64.deb
+filebeat_cache: filebeat-7.17.9-amd64.deb.sha512
+filebeat_src: ELK/
+dest_source: /home/ska/
+

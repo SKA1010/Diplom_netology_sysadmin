@@ -1,0 +1,7 @@
+---
+# defaults file for zabbix-agent
+zabbix_agent_url: "https://repo.zabbix.com/zabbix/6.4/debian/pool/main/z/zabbix-release/zabbix-release_6.4-1+debian11_all.deb"
+zabbix_agent_dest: "/home/ska/zabbix_agent/"
+zabbix_agent_deb: "zabbix-release_6.4-1+debian11_all.deb"
+zabbix_server_ip: "10.100.50.15"
+zabbix_server_name: "zabbix-test"

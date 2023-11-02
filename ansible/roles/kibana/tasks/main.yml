@@ -1,0 +1,28 @@
+---
+    - name: copy Kibana.
+      copy:
+        src: "{{src_kibana}}{{kibana_deb}}"
+        dest: "{{dest_source}}"
+        backup: yes
+
+    - name: install kibana
+      apt:
+        deb: "{{dest_source}}{{kibana_deb}}"
+
+    - name: aemon-reload
+      command: systemctl daemon-reload
+
+    - name: Enable kibana
+      systemd:
+        name: kibana
+        enabled: true
+
+    - name: kibana config
+      template:
+        src: kibana.j2
+        dest: /etc/kibana/kibana.yml
+
+    - name: strat kibana    
+      systemd:
+        name: kibana
+        state: started

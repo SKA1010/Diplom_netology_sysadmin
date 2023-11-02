@@ -1,0 +1,59 @@
+- name: Install nginx
+  hosts: nginx-servers
+  become: true
+  gather_facts: True
+  become_method: sudo
+  roles:
+    - nginx
+  tags:
+    - nginx
+
+- name: Install zabbix server
+  hosts: zabbix_server
+  become: true
+  gather_facts: True
+  become_method: sudo
+  roles:
+    - zabbix-server
+  tags:
+    - zabbix-server
+
+- name: Install zabbix_agent
+  hosts: zabbix_agent
+  become: true
+  gather_facts: True
+  become_method: sudo
+  roles:
+    - zabbix-agent
+  tags:
+    - zabbix-agent
+
+- name: Install elasticsearch 
+  hosts: elastic-server
+  become: true
+  gather_facts: True
+  become_method: sudo
+  roles:
+    - elasticsearch
+  tags:
+    - elastic
+
+- name: Install kibana
+  hosts: kibana
+  become: true
+  gather_facts: True
+  become_method: sudo
+  roles:
+    - kibana
+  tags:
+    - kibana
+
+- name: Install filebeat
+  hosts: filebeat
+  become: true
+  gather_facts: True
+  become_method: sudo
+  roles:
+    - filebeat
+  tags:
+    - filebeat

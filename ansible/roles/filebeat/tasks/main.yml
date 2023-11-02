@@ -1,0 +1,28 @@
+---
+    - name: copy deb Filebeat
+      copy:
+        src: "{{filebeat_src}}{{filebeat_deb}}"
+        dest: "{{dest_source}}"
+        backup: yes
+
+    - name: install filebeat
+      apt:
+        deb: "{{dest_source}}{{filebeat_deb}}"
+
+    - name: filebeat config
+      template:
+        src: filebeat.j2
+        dest: /etc/filebeat/filebeat.yml
+
+    - name: daemon-reload
+      command: systemctl daemon-reload
+
+    - name: enable service filebeat
+      systemd:
+        name: filebeat
+        enabled: true
+
+    - name: make sure a service filebeat is running
+      systemd:
+        state: started
+        name: filebeat

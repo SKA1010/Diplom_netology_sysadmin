@@ -1,0 +1,48 @@
+
+- name: bastion
+  hosts: bastion-server
+  become: true
+  become_method: sudo
+  gather_facts: True
+  tasks:
+    - name: add specified repository from sources list
+      ansible.builtin.apt_repository:
+        repo: deb-src http://ftp.debian.org/debian bullseye main contrib non-free
+        state: present
+
+    - name: add specified repository from sources list
+      ansible.builtin.apt_repository:
+        repo: deb-src http://ftp.debian.org/debian bullseye-updates main contrib non-free 
+        state: present
+
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+
+    - name: install ansible
+      apt:
+        name: ansible
+        state: present
+
+    - name: init ansible
+      shell: |
+        ansible-config init --disabled > ansible.cfg
+        exit 0
+
+    - name: copy ansible.conf
+      copy:
+        src: /home/ska/diplom/ansible.cfg
+        dest: /home/ska/ansible.cfg
+        backup: yes
+
+    - name: copy ssh keys
+      copy:
+        src: /home/ska/.ssh/id_rsa
+        dest: /home/ska/.ssh
+        backup: yes
+
+    - name: copy config
+      copy:
+        src: /home/ska/diplom
+        dest: /home/ska/ansible
+        backup: yes

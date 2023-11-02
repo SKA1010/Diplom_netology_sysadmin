@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: ska
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDxJBlDn/4TbTzyDEEwvaWfKedmMAdMEJwraJKWAgyRG7NKQVljsHKw2DKhzpcY4LO+1iW8dImOBi/t8cNOs8TsPlbjQSE3FPU5pfYnRA9HKWsZ1j9QhHprU0ooWqwo9FqX2pqjV0V/FlXJk8a4fDjtuD7YwN7yFjI2UAANr8U1tH7VbGew7+WVm5DZX3qEXszE3/6r/ePl9jYoLVht4puHNsqejMY8SB402BDPcniRVA2K3jz1FVHlVKQPiegA/whNZKNzc4W8jW0jlbGL2BYwuKczA72HouR0+6Qq8NntU8LzAZXIeLn3IUCEhvSeFP5QN6iHZmvDDP7T4JmFS6dgp+1ZYEIbozo8D8LjfYAoOtmEHO36QO/gKRH0f+9KeA3GIClMGr9Wdy+yg45B5GYnid72vWZ0202bK9v06pxlQN71hL7JOa+EIfwk4+bukYFBWITxdTmlYiiZBvoRARtV3+o3qN3I5kjNlk6S5MHWmgGNpt10jmEfnrwrExHF3Vk= ska@debian-11-hw

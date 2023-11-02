@@ -1,0 +1,21 @@
+---
+- name: install nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: change index.html
+  template:
+    src: index.j2
+    dest: /var/www/html/index.nginx-debian.html
+
+- name: change style
+  template:
+    src: style.j2
+    dest: /var/www/html/style.css
+
+- name: restart nginx
+  service: 
+    name: nginx
+    state: restarted
+

@@ -1,0 +1,18 @@
+---
+- hosts: sources
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Add specified repository from sources list
+      ansible.builtin.apt_repository:
+        repo: deb-src http://ftp.debian.org/debian bullseye main contrib non-free
+        state: present
+
+    - name: Add specified repository from sources list
+      ansible.builtin.apt_repository:
+        repo: deb-src http://ftp.debian.org/debian bullseye-updates main contrib non-free 
+        state: present
+
+    - name: Update apt packages
+      apt:
+        update_cache: yes

@@ -1,0 +1,33 @@
+---
+    - name: copy deb elasticsearch
+      copy:
+        src: "{{elastic_src}}{{elastic_deb}}"
+        dest: "{{dest_source}}"
+        backup: yes
+
+    - name: install elasticsearch
+      apt:
+        deb: "{{dest_source}}{{elastic_deb}}"
+
+    - name: daemon-reload
+      command: systemctl daemon-reload
+
+    - name: enable service elastic
+      systemd:
+        name: elasticsearch
+        enabled: true
+
+    - name: make sure a service elasticsearch is running
+      systemd:
+        state: started
+        name: elasticsearch
+
+    - name: config elasticsearch
+      template:
+        src: elasticsearch.j2
+        dest: /etc/elasticsearch/elasticsearch.yml
+
+    - name: service elasticsearch restart
+      systemd:
+        state: restarted
+        name: elasticsearch
