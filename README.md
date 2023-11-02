@@ -53,3 +53,22 @@ Cоздайте ВМ, разверните на ней Elasticsearch. Устан
 
 ### Резервное копирование
 Создайте snapshot дисков всех ВМ. Ограничьте время жизни snaphot в неделю. Сами snaphot настройте на ежедневное копирование.
+
+
+---------
+
+## Решение
+
+Согласно заданию, при помощи terraform были развёрнуты 6 ВМ, для них созданы внутренние IP адреса, к ним привязаны группы безопасности, разрешающие траффик по портам приложений.
+
+Главное окно:
+![yandex cloud main](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/bc68fcd2-54bf-4390-a761-f90be2f4eb6a)
+
+Созданные машины (все на базе Debian 11)
+![yandex cloud vm](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/b6a497fa-b9cc-48f0-90d0-df73e425bc52)
+
+Так же был создан облачный балансировщик траффика
+
+![yandex cloud balancer](https://github.com/SKA1010/Diplom_netology_sysadmin/assets/125235217/e1475f3b-dc2d-449a-9f6c-373419ee9071)
+
+
